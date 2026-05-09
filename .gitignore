@@ -118,7 +118,8 @@ backend/.installed
 tests
 CLAUDE.md
 .claude
-scripts
+scripts/*
+!scripts/build-linux.sh
 .code-review-state
 #openspec/
 code-reviews/
