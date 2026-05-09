@@ -1,0 +1,5 @@
+# pnpm 11 build-script 白名单
+# 这两个包需要 postinstall 脚本才能正常工作（esbuild 安装平台原生二进制、vue-demi 选版本）
+allowBuilds:
+  esbuild: true
+  vue-demi: true

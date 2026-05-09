@@ -17,7 +17,15 @@ echo "==> Version: $VERSION"
 echo "==> Output:  $OUTPUT_BIN"
 
 echo "==> [1/3] Installing frontend deps (pnpm install --frozen-lockfile)"
-pnpm --dir frontend install --frozen-lockfile
+# CI=true 让 pnpm 在非交互（无 TTY）环境下自动确认操作
+# NPM_REGISTRY 可覆盖 registry，国内可设为 https://registry.npmmirror.com/
+NPM_REGISTRY="${NPM_REGISTRY:-}"
+PNPM_REGISTRY_FLAG=()
+if [ -n "$NPM_REGISTRY" ]; then
+    echo "    using registry: $NPM_REGISTRY"
+    PNPM_REGISTRY_FLAG=(--registry "$NPM_REGISTRY")
+fi
+CI=true pnpm --dir frontend install --frozen-lockfile "${PNPM_REGISTRY_FLAG[@]}"
 
 echo "==> [2/3] Building frontend (产出到 backend/internal/web/dist)"
 pnpm --dir frontend run build
